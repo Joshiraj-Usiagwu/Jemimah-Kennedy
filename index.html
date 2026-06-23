@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Wedding Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --blush: #E8C9B8;
+    --rose: #C4856A;
+    --deep: #3D2B1F;
+    --muted: #7A6258;
+    --gold: #B8935A;
+    --white: #FFFFFF;
+    --light-border: rgba(180,140,110,0.2);
+  }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--deep);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250,247,242,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--light-border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--rose);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-links a:hover { color: var(--rose); }
+
+  /* PAGES */
+  .page { display: none; padding-top: 64px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* HOME PAGE */
+  .hero {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(196,133,106,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--deep);
+    margin-bottom: 2rem;
+    max-width: 700px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .divider {
+    width: 80px;
+    height: 1px;
+    background: var(--blush);
+    margin: 0 auto 2rem;
+  }
+
+  .divider-ornament {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin: 0 auto 2.5rem;
+    color: var(--blush);
+    font-size: 1.2rem;
+  }
+
+  .divider-ornament::before,
+  .divider-ornament::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: var(--blush);
+  }
+
+  .hero-greeting {
+    max-width: 640px;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    color: var(--deep);
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+
+  .journey-placeholder {
+    border: 1px dashed var(--blush);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    background: rgba(232,201,184,0.08);
+  }
+
+  .journey-placeholder p { font-style: italic; }
+
+  /* WEDDING DAY SECTION */
+  .wedding-section {
+    background: var(--white);
+    border-top: 1px solid var(--light-border);
+    border-bottom: 1px solid var(--light-border);
+    padding: 5rem 2rem;
+  }
+
+  .wedding-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .wedding-desc {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 580px;
+    margin-bottom: 3.5rem;
+  }
+
+  /* CATEGORY CARDS */
+  .categories {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .category-card {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--light-border);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .category-card:first-child { border-top: 1px solid var(--light-border); }
+
+  .category-card:hover .cat-title { color: var(--rose); }
+  .category-card:hover .cat-icon { background: var(--blush); }
+  .category-card:hover .cat-arrow { transform: translateX(4px); color: var(--rose); }
+
+  .cat-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(232,201,184,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .cat-content { flex: 1; }
+
+  .cat-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 0.25rem;
+    transition: color 0.2s;
+  }
+
+  .cat-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .cat-arrow {
+    color: var(--blush);
+    font-size: 1.2rem;
+    transition: all 0.2s;
+  }
+
+  /* GENERAL DONATE */
+  .general-donate {
+    margin-top: 3.5rem;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, rgba(196,133,106,0.08), rgba(184,147,90,0.06));
+    border: 1px solid var(--blush);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .general-donate-text h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 0.4rem;
+  }
+
+  .general-donate-text p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .btn-donate {
+    background: var(--rose);
+    color: var(--white);
+    border: none;
+    padding: 0.9rem 2.2rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .btn-donate:hover { background: #b07560; transform: translateY(-1px); }
+
+  /* CATEGORY DETAIL PAGE */
+  .cat-detail-hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    border-bottom: 1px solid var(--light-border);
+  }
+
+  .cat-detail-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(232,201,184,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .cat-detail-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    color: var(--deep);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .cat-detail-hero p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .cat-detail-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  .vision-board-placeholder {
+    border: 1px dashed var(--blush);
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--muted);
+    background: rgba(232,201,184,0.05);
+    margin-bottom: 3rem;
+  }
+
+  .vision-board-placeholder .vb-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .vision-board-placeholder p { font-size: 0.9rem; font-style: italic; line-height: 1.7; }
+
+  .qr-section {
+    background: var(--white);
+    border: 1px solid var(--light-border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .qr-placeholder {
+    width: 120px;
+    height: 120px;
+    border: 2px dashed var(--blush);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+    background: var(--cream);
+  }
+
+  .qr-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 0.5rem;
+  }
+
+  .qr-info p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0.5rem 0;
+    transition: color 0.2s;
+    border: none;
+    background: none;
+    font-family: 'Jost', sans-serif;
+    margin-bottom: 0.5rem;
+  }
+
+  .back-btn:hover { color: var(--rose); }
+
+  /* FUNDRAISERS PAGE */
+  .simple-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .simple-page h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    color: var(--deep);
+    margin-bottom: 1rem;
+  }
+
+  .simple-page .page-desc {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.9;
+    max-width: 540px;
+    margin-bottom: 3rem;
+  }
+
+  .fundraiser-placeholder {
+    border: 1px dashed var(--blush);
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--muted);
+    background: rgba(232,201,184,0.05);
+  }
+
+  .fundraiser-placeholder .fp-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .fundraiser-placeholder p { font-size: 0.9rem; font-style: italic; line-height: 1.7; }
+
+  /* CONTACT PAGE */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .contact-card {
+    background: var(--white);
+    border: 1px solid var(--light-border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .contact-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .contact-card .contact-detail {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--rose);
+  }
+
+  .contact-form-section {
+    margin-top: 3rem;
+    background: var(--white);
+    border: 1px solid var(--light-border);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+
+  .contact-form-section h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 1.5rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--light-border);
+    border-radius: 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    color: var(--deep);
+    background: var(--cream);
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--rose);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--light-border);
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  footer .footer-monogram {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--blush);
+    margin-bottom: 0.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.7rem; letter-spacing: 0.06em; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .general-donate { flex-direction: column; }
+    .cat-detail-hero { flex-direction: column; }
+    .qr-section { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">Our Wedding</div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')">Home</a></li>
+    <li><a onclick="showPage('fundraisers')">Fundraisers</a></li>
+    <li><a onclick="showPage('contact')">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <p class="hero-eyebrow">A celebration of love</p>
+    <h1>Welcome Family<br>& <em>Friends</em></h1>
+    <div class="divider-ornament">✦</div>
+    <p class="hero-greeting">
+      We welcome all of you to join in on this epic journey as we walk towards marriage, and a Wedding Day that celebrates the beginning of this beautiful covenant. Thank you all for your support, emotionally, spiritually or financially — we appreciate it all, and are overjoyed to be surrounded by such a supportive community.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">How it all began</p>
+    <h2>Our Journey</h2>
+    <div class="journey-placeholder">
+      <p>✍️ This is where your love story goes.<br>Share how you met, your favourite memories together, and the moment you knew this was forever.</p>
+    </div>
+  </section>
+
+  <section class="wedding-section">
+    <div class="wedding-inner">
+      <p class="section-label">The Big Day</p>
+      <h2>Our Wedding Day</h2>
+      <p class="wedding-desc">
+        We are raising funds to help bring our dream wedding to life. Every contribution, big or small, means the world to us. Choose a specific area you'd like to support below, or make a general donation — all gifts go directly towards making our day unforgettable.
+      </p>
+
+      <div class="categories">
+        <div class="category-card" onclick="showCategory('venue')">
+          <div class="cat-icon">🏛️</div>
+          <div class="cat-content">
+            <div class="cat-title">The Venue</div>
+            <div class="cat-sub">Help us find the perfect space for our ceremony &amp; reception</div>
+          </div>
+          <span class="cat-arrow">→</span>
+        </div>
+
+        <div class="category-card" onclick="showCategory('food')">
+          <div class="cat-icon">🍽️</div>
+          <div class="cat-content">
+            <div class="cat-title">Food &amp; Catering</div>
+            <div class="cat-sub">A feast shared with the ones we love most</div>
+          </div>
+          <span class="cat-arrow">→</span>
+        </div>
+
+        <div class="category-card" onclick="showCategory('gown')">
+          <div class="cat-icon">👗</div>
+          <div class="cat-content">
+            <div class="cat-title">Bride's Wedding Gown</div>
+            <div class="cat-sub">The dress she's dreamed of her whole life</div>
+          </div>
+          <span class="cat-arrow">→</span>
+        </div>
+
+        <div class="category-card" onclick="showCategory('suit')">
+          <div class="cat-icon">🤵</div>
+          <div class="cat-content">
+            <div class="cat-title">Groom's Suit</div>
+            <div class="cat-sub">Sharp, timeless, and made for the occasion</div>
+          </div>
+          <span class="cat-arrow">→</span>
+        </div>
+
+        <div class="category-card" onclick="showCategory('photo')">
+          <div class="cat-icon">📸</div>
+          <div class="cat-content">
+            <div class="cat-title">Photographer &amp; Videographer</div>
+            <div class="cat-sub">Capturing every precious moment for a lifetime</div>
+          </div>
+          <span class="cat-arrow">→</span>
+        </div>
+
+        <div class="category-card" onclick="showCategory('decor')">
+          <div class="cat-icon">🌸</div>
+          <div class="cat-content">
+            <div class="cat-title">Decorations &amp; Florals</div>
+            <div class="cat-sub">Flowers, candles, and the atmosphere of our dreams</div>
+          </div>
+          <span class="cat-arrow">→</span>
+        </div>
+
+        <div class="category-card" onclick="showCategory('honeymoon')">
+          <div class="cat-icon">✈️</div>
+          <div class="cat-content">
+            <div class="cat-title">Honeymoon</div>
+            <div class="cat-sub">Our first adventure as husband and wife</div>
+          </div>
+          <span class="cat-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="general-donate">
+        <div class="general-donate-text">
+          <h3>💛 General Donation</h3>
+          <p>Not sure which category? A general donation goes wherever it's needed most and is just as meaningful to us.</p>
+        </div>
+        <button class="btn-donate" onclick="showCategory('general')">Donate Now</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-monogram">♡</div>
+    <p>Made with love &nbsp;·&nbsp; Our Wedding Day</p>
+  </footer>
+</div>
+
+<!-- CATEGORY DETAIL PAGES -->
+<div id="page-category" class="page">
+  <div style="max-width:860px;margin:0 auto;padding:1.5rem 2rem 0;">
+    <button class="back-btn" onclick="showPage('home')">← Back to all categories</button>
+  </div>
+
+  <div class="cat-detail-hero">
+    <div class="cat-detail-icon" id="cat-icon">🏛️</div>
+    <div>
+      <h1 id="cat-name">The Venue</h1>
+      <p id="cat-desc">Help us find and secure the perfect space for our ceremony and reception.</p>
+    </div>
+  </div>
+
+  <div class="cat-detail-body">
+    <p class="section-label" style="margin-bottom:1rem;">Our vision</p>
+    <div class="vision-board-placeholder">
+      <div class="vb-icon">🖼️</div>
+      <p>Your vision board goes here.<br>Add photos, colour palettes, and inspiration images to bring this section to life.</p>
+    </div>
+
+    <p class="section-label" style="margin-bottom:1rem;">Contribute</p>
+    <div class="qr-section">
+      <div class="qr-placeholder">📱</div>
+      <div class="qr-info">
+        <h3>Scan to donate via Revolut</h3>
+        <p>Add your Revolut QR code or payment link here. Guests can scan it directly with their phone camera to send a contribution straight to this category — no platform fees, instant transfer.</p>
+        <button class="btn-donate" style="font-size:0.75rem;padding:0.75rem 1.6rem;">Open Revolut Link</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-monogram">♡</div>
+    <p>Made with love &nbsp;·&nbsp; Our Wedding Day</p>
+  </footer>
+</div>
+
+<!-- FUNDRAISERS PAGE -->
+<div id="page-fundraisers" class="page">
+  <div class="simple-page">
+    <p class="section-label">Community support</p>
+    <h1>Fundraisers</h1>
+    <p class="page-desc">
+      Beyond individual contributions, our community has come together to organise events and fundraisers in celebration of our upcoming wedding. Check back here for updates, events, and ways to get involved.
+    </p>
+    <div class="fundraiser-placeholder">
+      <div class="fp-icon">🎉</div>
+      <p>Fundraiser events and campaigns will appear here.<br>Add details about upcoming events, raffles, or community initiatives.</p>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-monogram">♡</div>
+    <p>Made with love &nbsp;·&nbsp; Our Wedding Day</p>
+  </footer>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="page-contact" class="page">
+  <div class="simple-page">
+    <p class="section-label">Get in touch</p>
+    <h1>Contact Us</h1>
+    <p class="page-desc">
+      Have a question, want to get involved, or just want to send us your love? We'd be delighted to hear from you.
+    </p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>The Bride</h3>
+        <p>For questions about the wedding, guest arrangements, or anything else — reach out directly.</p>
+        <div class="contact-detail">Add email or phone here</div>
+      </div>
+      <div class="contact-card">
+        <h3>The Groom</h3>
+        <p>Happy to answer questions about donations, logistics, or to simply chat and celebrate together.</p>
+        <div class="contact-detail">Add email or phone here</div>
+      </div>
+    </div>
+
+    <div class="contact-form-section">
+      <h3>Send us a message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your name</label>
+          <input type="text" placeholder="Jane Smith" />
+        </div>
+        <div class="form-group">
+          <label>Your email</label>
+          <input type="email" placeholder="jane@example.com" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="5" placeholder="Write your message here..."></textarea>
+      </div>
+      <button class="btn-donate" style="margin-top:0.5rem;">Send Message</button>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-monogram">♡</div>
+    <p>Made with love &nbsp;·&nbsp; Our Wedding Day</p>
+  </footer>
+</div>
+
+<script>
+const categories = {
+  venue: {
+    icon: '🏛️',
+    name: 'The Venue',
+    desc: 'Help us find and secure the perfect space for our ceremony and reception — a place as special as the love we\'re celebrating.'
+  },
+  food: {
+    icon: '🍽️',
+    name: 'Food & Catering',
+    desc: 'A wedding feast shared with those we love most. Help us create a dining experience our guests will remember forever.'
+  },
+  gown: {
+    icon: '👗',
+    name: "Bride's Wedding Gown",
+    desc: 'Every bride deserves to feel magical on her wedding day. Help make the dress of her dreams a reality.'
+  },
+  suit: {
+    icon: '🤵',
+    name: "Groom's Suit",
+    desc: 'Sharp, timeless, and perfectly tailored for the most important day of his life.'
+  },
+  photo: {
+    icon: '📸',
+    name: 'Photographer & Videographer',
+    desc: 'These are the moments we\'ll look back on for the rest of our lives. Help us capture every smile, every tear, every laugh.'
+  },
+  decor: {
+    icon: '🌸',
+    name: 'Decorations & Florals',
+    desc: 'Flowers, candles, and carefully chosen details that will transform our venue into something truly breathtaking.'
+  },
+  honeymoon: {
+    icon: '✈️',
+    name: 'Honeymoon',
+    desc: 'Our very first adventure as husband and wife. Help us begin married life with a journey we\'ll never forget.'
+  },
+  general: {
+    icon: '💛',
+    name: 'General Donation',
+    desc: 'Your generous gift will go exactly where it\'s needed most — every contribution brings our wedding day closer to perfect.'
+  }
+};
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showCategory(key) {
+  const cat = categories[key];
+  if (!cat) return;
+  document.getElementById('cat-icon').textContent = cat.icon;
+  document.getElementById('cat-name').textContent = cat.name;
+  document.getElementById('cat-desc').textContent = cat.desc;
+  showPage('category');
+}
+</script>
+</body>
+</html>
